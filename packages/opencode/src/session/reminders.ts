@@ -25,7 +25,7 @@ export const apply = Effect.fn("SessionReminders.apply")(function* (input: {
 
   if (!flags.experimentalPlanMode) {
     if (input.agent.name === "plan") {
-      userMessage.parts.push({
+      userMessage.parts.splice(userMessage.parts.length - 1, 0, {
         id: PartID.ascending(),
         messageID: userMessage.info.id,
         sessionID: userMessage.info.sessionID,
@@ -36,7 +36,7 @@ export const apply = Effect.fn("SessionReminders.apply")(function* (input: {
     }
     const wasPlan = input.messages.some((msg) => msg.info.role === "assistant" && msg.info.agent === "plan")
     if (wasPlan && input.agent.name === "build") {
-      userMessage.parts.push({
+      userMessage.parts.splice(userMessage.parts.length - 1, 0, {
         id: PartID.ascending(),
         messageID: userMessage.info.id,
         sessionID: userMessage.info.sessionID,
